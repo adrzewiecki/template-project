@@ -79,11 +79,6 @@ jobs:
           name: unit-test-py312
           path: unit-test-py312
 
-      - name: Download coverage report
-        uses: actions/download-artifact@v4
-        with:
-          name: coverage-results
-
       - name: Pytest coverage comment in pull-request
         uses: MishaKav/pytest-coverage-comment@main
         with:
