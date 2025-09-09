@@ -49,4 +49,4 @@ jobs:
 
       - name: Run pytest with code coverage
         run: |
-          uv run pytest --junitxml pytest.xml --cov=. --cov-report=term-missing --cov-report=xml:coverage.xml --cov-branch
+          uv run pytest --junitxml pytest.xml --cov=. --cov-report=term-missing --cov-report=xml:coverage.xml --cov-branch | tee pytest-coverage.txt
