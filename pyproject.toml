@@ -1,3 +1,56 @@
-[tool.black]
+[project]
+name = "iai-template"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.30.1",
+    "mypy>=1.17.1",
+    "pre-commit>=4.3.0",
+    "pytest>=8.4.2",
+    "ruff>=0.12.12",
+]
+
+
+[tool.uv]
+package = false
+required-version = "~= 0.8"
+
+
+[tool.ruff]
+# https://docs.astral.sh/ruff/configuration/
+preview = false
 line-length = 80
-target-version = ['py39']
+target-version = "py312"
+
+
+[tool.ruff.lint]
+select = [
+    "B",   # https://docs.astral.sh/ruff/rules/#flake8-bugbear-b
+    "D",   # https://docs.astral.sh/ruff/rules/#pydocstyle-d
+    "E",   # https://docs.astral.sh/ruff/rules/#error-e
+    "F",   # https://docs.astral.sh/ruff/rules/#pyflakes-f
+    "I",   # https://docs.astral.sh/ruff/rules/#isort-i
+    "PL",  # https://docs.astral.sh/ruff/rules/#pylint-pl
+    "UP",  # https://docs.astral.sh/ruff/rules/#pyupgrade-up
+    "N",   # https://docs.astral.sh/ruff/rules/#pep8-naming-n
+    "RUF", # https://docs.astral.sh/ruff/rules/#ruff-specific-rules-ruf
+]
+ignore = [
+    "D101", # https://docs.astral.sh/ruff/rules/undocumented-public-class/
+    "D104", # https://docs.astral.sh/ruff/rules/undocumented-public-package/
+    "D105", # https://docs.astral.sh/ruff/rules/undocumented-magic-method/
+    "N818", # https://github.com/astral-sh/ruff/issues/5367
+]
+
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+
+[tool.ruff.format]
+docstring-code-format = true

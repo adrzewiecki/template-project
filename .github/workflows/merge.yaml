@@ -6,32 +6,36 @@ on:
 
 jobs:
   pre-commit-and-test:
-    name: "Pre-commit and Test Python 3.9"
+    name: Pre-commit and Test Python 3.12
     runs-on: ubuntu-latest
     if: always()
     timeout-minutes: 20
 
     steps:
       - uses: actions/checkout@v3
-      - name: Setup python
-        uses: actions/setup-python@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
         with:
-          python-version: "3.9"
-          cache: "pip"
+          python-version-file: ".python-version"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
 
       - name: Install Dependencies
         run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest-github-actions-annotate-failures
-        
+          uv sync --locked --all-extras --dev
+          uv pip install pytest-github-actions-annotate-failures
+
       - name: Install Graphviz
         uses: tlylt/install-graphviz@v1
 
       - name: PyTest with code coverage
         continue-on-error: true
         run: |
-          pytest --cov=. --cov-report=term-missing --cov-report=xml --cov-branch
+          uv run pytest --cov=. --cov-report=term-missing --cov-report=xml --cov-branch
 
       - name: Get the Coverage
         shell: bash
@@ -47,7 +51,7 @@ jobs:
           fi
           echo "COVERAGE=${coverage%.*}%" >> $GITHUB_ENV
           echo "COLOR=$COLOR" >> $GITHUB_ENV
-      
+
       - name: Create Coverage Badge
         uses: schneegans/dynamic-badges-action@v1.7.0
         with:
