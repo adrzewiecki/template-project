@@ -40,11 +40,11 @@ jobs:
       - name: Install Dependencies
         run: uv sync --locked --all-extras --dev
 
-      - name: Run Ruff linter
+      - name: Run ruff linter
         shell: bash
         run: pre-commit run ruff-check --all-files
 
-      - name: Run Ruff formatter
+      - name: Run ruff formatter
         shell: bash
         run: pre-commit run ruff-format --all-files
 
@@ -67,14 +67,14 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: unit-test-py39
+          name: unit-test-py312
           path: pytest.xml
 
       - name: Upload Unit Test Results
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: unit-test-py39
+          name: unit-test-py312
           path: pytest-coverage.txt
 
   publish-test-results:
@@ -88,8 +88,8 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v3
         with:
-          name: unit-test-py39
-          path: unit-test-py39
+          name: unit-test-py312
+          path: unit-test-py312
 
       - name: Download coverage report
         uses: actions/download-artifact@v3
@@ -100,8 +100,8 @@ jobs:
         uses: MishaKav/pytest-coverage-comment@main
         with:
           default-branch: main
-          pytest-coverage-path: unit-test-py39/pytest-coverage.txt
-          junitxml-path: unit-test-py39/pytest.xml
+          pytest-coverage-path: unit-test-py312/pytest-coverage.txt
+          junitxml-path: unit-test-py312/pytest.xml
           hide-badge: true
           hide-report: false
           create-new-comment: false
