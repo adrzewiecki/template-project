@@ -97,7 +97,7 @@ jobs:
         shell: bash
         run: |
           regex='<coverage.+line-rate="([0-9).[0-9]+)".+>'
-          line=$(grep -oP $regex coverage.xml)
+          line=$(grep -oP $regex unit-test-py312/coverage.xml)
           [[ $line =~ $regex ]]
           coverage=$( bc <<< ${BASH_REMATCH[1]}*100 )
           if (( $(echo "$coverage > 90" |bc -l) )); then
