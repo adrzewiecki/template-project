@@ -13,18 +13,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Setup python
-        uses: actions/setup-python@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
         with:
-          python-version: "3.9"
-          cache: "pip"
+          python-version-file: ".python-version"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
 
       - name: Install Dependencies
         run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest-github-actions-annotate-failures
-        
+          uv sync --locked --all-extras --dev
+          uv pip install pytest-github-actions-annotate-failures
+
       - name: Install Graphviz
         uses: tlylt/install-graphviz@v1
 
