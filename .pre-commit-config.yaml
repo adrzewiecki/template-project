@@ -9,20 +9,18 @@ repos:
       - id: ruff-format
         stages: [pre-commit]
 
-  - repo: local
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.17.1
     hooks:
       - id: mypy
-        name: mypy
-        entry: mypy
-        language: python
-        types: [python]
-        exclude: ^(tests|data|docs)/
         args:
           - --no-strict-optional
           - --ignore-missing-imports
           - --no-incremental
           - --disable-error-code=override
 
+  - repo: local
+    hooks:
       - id: pytest
         name: run tests
         entry: pytest tests -vv
