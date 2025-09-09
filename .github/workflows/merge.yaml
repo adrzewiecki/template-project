@@ -6,7 +6,7 @@ on:
 
 jobs:
   pre-commit-and-test:
-    name: "Pre-commit and Test Python 3.9"
+    name: Pre-commit and Test Python 3.12
     runs-on: ubuntu-latest
     if: always()
     timeout-minutes: 20
@@ -51,7 +51,7 @@ jobs:
           fi
           echo "COVERAGE=${coverage%.*}%" >> $GITHUB_ENV
           echo "COLOR=$COLOR" >> $GITHUB_ENV
-      
+
       - name: Create Coverage Badge
         uses: schneegans/dynamic-badges-action@v1.7.0
         with:
