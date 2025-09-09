@@ -9,8 +9,8 @@ This repository serves as a template for software projects.
 
 ## Testing and GitHub actions
 
-Using `pre-commit` hooks, `flake8`, `black`, `mypy`, `docformatter`, `pydocstyle` and `pytest` are locally run on every commit. For more details on how to use `pre-commit` hooks see [here](https://github.com/iai-group/guidelines/tree/main/python#install-pre-commit-hooks).
+Using `pre-commit` hooks, `pytest`, `mypy` and `ruff`, with various rules run locally on every commit. For more details on how to use `pre-commit` hooks see [here](https://github.com/iai-group/guidelines/tree/main/python#install-pre-commit-hooks).
 
-Similarly, Github actions are used to run `flake8`, `black`, `mypy`, `docformatter`, `pydocstyle` and `pytest` on every push and pull request and merge to main. The `pytest` also runs coverage. GitHub actions are explained in detail [here](https://github.com/iai-group/guidelines/blob/main/github/Actions.md).
+Similarly, Github actions are used to run the same suite of tools on every push and pull request and merge to main. The `pytest` also runs coverage. GitHub actions are explained in detail [here](https://github.com/iai-group/guidelines/blob/main/github/Actions.md).
 
 For GitHub actions/CI Setup see [here](docs/CI_setup.md)
