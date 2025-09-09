@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 20
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
       - name: Setup Python
         uses: actions/setup-python@v6
@@ -35,7 +35,7 @@ jobs:
       - name: PyTest with code coverage
         continue-on-error: true
         run: |
-          uv run pytest --cov=. --cov-report=term-missing --cov-report=xml --cov-branch
+          uv run pytest --junitxml pytest.xml --cov=. --cov-report=term-missing --cov-report=xml:coverage.xml --cov-branch |
 
       - name: Get the Coverage
         shell: bash
