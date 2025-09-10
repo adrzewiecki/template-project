@@ -20,6 +20,8 @@ dev = [
 [tool.uv]
 package = false
 required-version = "~= 0.8"
+# https://docs.astral.sh/uv/reference/settings/#python-preference
+python-preference = "system"
 
 
 [tool.ruff]
