@@ -56,26 +56,15 @@ jobs:
         run: |
           uv run pytest --junitxml pytest.xml --cov=. --cov-report=term-missing --cov-report=xml:coverage.xml --cov-branch | tee pytest-coverage.txt
 
-      - name: Upload Coverage Results
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-results
-          path: coverage.xml
-        if: ${{ always() }}
-
       - name: Upload Unit Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: unit-test-py312
-          path: pytest.xml
-
-      - name: Upload Unit Test Results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: unit-test-py312
-          path: pytest-coverage.txt
+          path: |
+            pytest.xml
+            coverage.xml
+            pytest-coverage.txt
 
   publish-test-results:
     name: Publish Unit Tests Results
@@ -86,21 +75,17 @@ jobs:
 
     steps:
       - name: Download Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: unit-test-py312
           path: unit-test-py312
-
-      - name: Download coverage report
-        uses: actions/download-artifact@v3
-        with:
-          name: coverage-results
 
       - name: Pytest coverage comment in pull-request
         uses: MishaKav/pytest-coverage-comment@main
         with:
           default-branch: main
           pytest-coverage-path: unit-test-py312/pytest-coverage.txt
+          pytest-xml-coverage-path: unit-test-py312/coverage.xml
           junitxml-path: unit-test-py312/pytest.xml
           hide-badge: true
           hide-report: false
@@ -112,7 +97,7 @@ jobs:
         shell: bash
         run: |
           regex='<coverage.+line-rate="([0-9).[0-9]+)".+>'
-          line=$(grep -oP $regex coverage.xml)
+          line=$(grep -oP $regex unit-test-py312/coverage.xml)
           [[ $line =~ $regex ]]
           coverage=$( bc <<< ${BASH_REMATCH[1]}*100 )
           if (( $(echo "$coverage > 90" |bc -l) )); then
